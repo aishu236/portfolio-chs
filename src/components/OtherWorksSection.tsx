@@ -23,7 +23,7 @@ const externalLinks = [
   {
     title: 'Sniva Studio',
     description: 'Brand identity, content creation & social media for Sniva',
-    url: 'https://www.instagram.com/sniva_studio/',
+    url: 'https://www.instagram.com/sniva_studio?igsh=dXZ2ZHo5d25mc3dz',
     type: 'Instagram Profile',
   },
   {
