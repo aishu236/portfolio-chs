@@ -30,8 +30,9 @@ export default function Navbar() {
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-          <a href="#" className="font-display font-bold text-xl tracking-wider text-foreground hover:text-primary transition-colors">
-            CHS<span className="text-primary">.</span>
+          <a href="#" className="flex items-center gap-2">
+            <img src="/chs-logo.png" alt="CHS Media" className="h-8 w-auto" />
+            <span className="font-display font-bold text-lg tracking-wider text-foreground">CHS</span>
           </a>
 
           {/* Desktop Nav */}

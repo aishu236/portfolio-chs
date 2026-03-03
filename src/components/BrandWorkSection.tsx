@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import brandLogos from '@/assets/brand-logos.png';
+import snivaLogo from '@/assets/sniva-logo.png';
 
 const brands = [
   { name: 'Conflkt Magazine', type: 'Fashion Show Production', link: '#works' },
@@ -10,7 +11,7 @@ const brands = [
   { name: 'Intaa Interiors', type: 'Social Media Marketing', link: '#works' },
   { name: 'Nonucare', type: 'Digital Marketing', link: 'https://www.instagram.com/nonucare?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==' },
   { name: 'Deeraj Interiors', type: 'Content Production', link: '#works' },
-  { name: 'Sniva', type: 'Brand & Content', link: 'https://www.instagram.com/sniva_studio/' },
+  { name: 'Sniva', type: 'Brand & Content', link: 'https://www.instagram.com/sniva_studio?igsh=dXZ2ZHo5d25mc3dz', logo: snivaLogo },
   { name: 'Namaste Grocery', type: 'Social Media & Content', link: 'https://www.instagram.com/reel/C7k6ZjzM3Am/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==' },
 ];
 
@@ -65,10 +66,14 @@ export default function BrandWorkSection() {
               className="clay-card iso-hover group p-8 flex flex-col justify-between min-h-[220px] cursor-pointer"
             >
               <div>
-                <div className="w-12 h-12 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors duration-500">
-                  <span className="font-display font-bold text-primary text-lg">
-                    {brand.name.charAt(0)}
-                  </span>
+                <div className="w-12 h-12 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors duration-500 overflow-hidden">
+                  {brand.logo ? (
+                    <img src={brand.logo} alt={brand.name} className="w-full h-full object-cover rounded-lg" />
+                  ) : (
+                    <span className="font-display font-bold text-primary text-lg">
+                      {brand.name.charAt(0)}
+                    </span>
+                  )}
                 </div>
                 <h3 className="font-display font-bold text-xl text-foreground group-hover:text-primary transition-colors duration-500">
                   {brand.name}

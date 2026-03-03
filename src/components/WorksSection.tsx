@@ -3,7 +3,7 @@ import { ExternalLink, Play } from 'lucide-react';
 
 const works = [
   {
-    title: '🎵 Songs Production',
+    title: 'Songs Production',
     description: 'From concept to completion, our team handled the entire production of rap music videos — including pre-production planning, shooting, editing, and VFX.',
     links: [
       { label: 'DEVA - DHOORANGUNDU', url: 'https://www.youtube.com/watch?v=nhIMW1szms8', type: 'YouTube' },
@@ -12,7 +12,7 @@ const works = [
     ],
   },
   {
-    title: '💪 Wellversed ICN 3 Days Production',
+    title: 'Wellversed ICN 3 Days Production',
     description: 'We managed the complete production of the national-level ICN Fitness Competition, covering three days of high-intensity events with multi-camera coverage and live editing.',
     links: [
       { label: 'Day 1 Highlights', url: 'https://www.instagram.com/reel/DNq3Y-Hz5i9/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA%3D%3D', type: 'Instagram' },
@@ -21,7 +21,7 @@ const works = [
     ],
   },
   {
-    title: '👗 ConflktMagazine Fashion Shows',
+    title: 'ConflktMagazine Fashion Shows',
     description: 'From concept to curtain call, we executed fashion shows handling creative direction, stage design, visual storytelling, full production and post-editing.',
     links: [
       { label: 'Fashion Show Film 1', url: 'https://www.youtube.com/watch?v=XvRnD0FJSbw', type: 'YouTube' },

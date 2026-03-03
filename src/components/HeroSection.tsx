@@ -1,6 +1,7 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 import Scene3D from './Scene3D';
+import heroBg from '@/assets/chs-hero-bg.png';
 
 const textReveal = {
   hidden: { opacity: 0, y: 80 },
@@ -39,17 +40,17 @@ export default function HeroSection() {
           </motion.p>
 
           <div className="overflow-hidden mb-4">
-            <motion.h1 custom={1} variants={textReveal} className="font-display font-black text-5xl md:text-7xl lg:text-8xl leading-[0.95] tracking-tight">
+            <motion.h1 custom={1} variants={textReveal} className="font-display font-extrabold text-5xl md:text-7xl lg:text-8xl leading-[0.95] tracking-tight">
               <span className="text-gradient">Creative Media</span>
             </motion.h1>
           </div>
           <div className="overflow-hidden mb-4">
-            <motion.h1 custom={2} variants={textReveal} className="font-display font-black text-5xl md:text-7xl lg:text-8xl leading-[0.95] tracking-tight text-foreground">
+            <motion.h1 custom={2} variants={textReveal} className="font-display font-extrabold text-5xl md:text-7xl lg:text-8xl leading-[0.95] tracking-tight text-foreground">
               & Digital Marketing
             </motion.h1>
           </div>
           <div className="overflow-hidden mb-8">
-            <motion.h1 custom={3} variants={textReveal} className="font-display font-black text-5xl md:text-7xl lg:text-8xl leading-[0.95] tracking-tight">
+            <motion.h1 custom={3} variants={textReveal} className="font-display font-extrabold text-5xl md:text-7xl lg:text-8xl leading-[0.95] tracking-tight">
               <span className="text-foreground">Agency in </span>
               <span className="text-gradient">Hyderabad</span>
             </motion.h1>
@@ -74,15 +75,20 @@ export default function HeroSection() {
         >
           <a
             href="#works"
-            className="px-8 py-3 font-display font-semibold text-sm tracking-wider uppercase border-2 border-foreground text-foreground rounded-full hover:bg-foreground hover:text-background transition-all duration-500 iso-hover"
+            className="px-8 py-3 font-display font-semibold text-sm tracking-wider uppercase border-2 border-foreground text-foreground rounded-full hover:bg-foreground hover:text-background transition-all duration-500"
           >
             View Works
           </a>
           <a
             href="#contact"
-            className="px-8 py-3 font-display font-semibold text-sm tracking-wider uppercase bg-foreground text-background rounded-full hover:bg-primary hover:text-primary-foreground transition-all duration-500 iso-hover"
+            className="relative px-8 py-3 font-display font-semibold text-sm tracking-wider uppercase bg-primary text-primary-foreground rounded-full hover:shadow-lg hover:shadow-primary/30 transition-all duration-500 overflow-hidden group"
           >
-            Book Now
+            <span className="relative z-10">Book Now</span>
+            <img 
+              src={heroBg} 
+              alt="" 
+              className="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:opacity-30 transition-opacity duration-500" 
+            />
           </a>
         </motion.div>
       </motion.div>

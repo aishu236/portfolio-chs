@@ -1,133 +1,172 @@
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { Float, MeshDistortMaterial, MeshWobbleMaterial } from '@react-three/drei';
+import { Float, MeshDistortMaterial } from '@react-three/drei';
 import { useRef, Suspense, useMemo } from 'react';
 import * as THREE from 'three';
 
-// Low Poly Crystal
-function LowPolyCrystal() {
-  const meshRef = useRef<THREE.Mesh>(null);
+// Film Camera Body
+function FilmCamera() {
+  const groupRef = useRef<THREE.Group>(null);
   
   useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.x = state.clock.elapsedTime * 0.15;
-      meshRef.current.rotation.y = state.clock.elapsedTime * 0.2;
-      meshRef.current.position.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.3;
+    if (groupRef.current) {
+      groupRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.3) * 0.3;
+      groupRef.current.position.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.2;
     }
   });
 
   return (
-    <Float speed={1.2} rotationIntensity={0.4} floatIntensity={1.5}>
-      <mesh ref={meshRef} scale={1.8} position={[0, 0, -1]}>
-        <icosahedronGeometry args={[1, 0]} />
-        <MeshDistortMaterial
-          color="#e8a030"
-          roughness={0.3}
-          metalness={0.6}
-          distort={0.2}
-          speed={3}
-          transparent
-          opacity={0.25}
-        />
-      </mesh>
+    <Float speed={0.8} rotationIntensity={0.2} floatIntensity={1}>
+      <group ref={groupRef} position={[-2.5, 0.5, -1]} scale={0.6}>
+        {/* Camera body */}
+        <mesh>
+          <boxGeometry args={[1.8, 1.2, 1.2]} />
+          <meshStandardMaterial color="#2a2a2a" roughness={0.3} metalness={0.8} />
+        </mesh>
+        {/* Lens barrel */}
+        <mesh position={[0, 0, 0.9]}>
+          <cylinderGeometry args={[0.4, 0.5, 0.8, 16]} />
+          <meshStandardMaterial color="#1a1a1a" roughness={0.2} metalness={0.9} />
+        </mesh>
+        {/* Lens glass */}
+        <mesh position={[0, 0, 1.35]}>
+          <circleGeometry args={[0.35, 32]} />
+          <meshStandardMaterial color="#4488cc" roughness={0.1} metalness={0.3} transparent opacity={0.6} />
+        </mesh>
+        {/* Viewfinder */}
+        <mesh position={[0, 0.8, -0.2]}>
+          <boxGeometry args={[0.4, 0.3, 0.5]} />
+          <meshStandardMaterial color="#222222" roughness={0.4} metalness={0.7} />
+        </mesh>
+        {/* Handle/grip */}
+        <mesh position={[0.7, -0.5, 0]}>
+          <boxGeometry args={[0.3, 0.6, 0.4]} />
+          <meshStandardMaterial color="#333333" roughness={0.5} metalness={0.6} />
+        </mesh>
+      </group>
     </Float>
   );
 }
 
-// Abstract Morphing Blob
-function MorphBlob() {
-  const meshRef = useRef<THREE.Mesh>(null);
+// Studio Light / Softbox
+function StudioLight() {
+  const groupRef = useRef<THREE.Group>(null);
+
+  useFrame((state) => {
+    if (groupRef.current) {
+      groupRef.current.rotation.z = Math.sin(state.clock.elapsedTime * 0.4) * 0.1;
+      groupRef.current.position.y = Math.cos(state.clock.elapsedTime * 0.6) * 0.15;
+    }
+  });
+
+  return (
+    <Float speed={1.2} rotationIntensity={0.15} floatIntensity={0.8}>
+      <group ref={groupRef} position={[3, 1.5, -2]} scale={0.5}>
+        {/* Light panel */}
+        <mesh>
+          <boxGeometry args={[1.5, 2, 0.15]} />
+          <meshStandardMaterial color="#f5f0e8" roughness={0.9} metalness={0} emissive="#f5e6c8" emissiveIntensity={0.3} />
+        </mesh>
+        {/* Frame */}
+        <mesh>
+          <boxGeometry args={[1.6, 2.1, 0.05]} />
+          <meshStandardMaterial color="#333333" roughness={0.4} metalness={0.7} />
+        </mesh>
+        {/* Stand pole */}
+        <mesh position={[0, -1.8, 0]}>
+          <cylinderGeometry args={[0.05, 0.05, 1.6, 8]} />
+          <meshStandardMaterial color="#444444" roughness={0.3} metalness={0.8} />
+        </mesh>
+        {/* Base */}
+        <mesh position={[0, -2.6, 0]} rotation={[Math.PI / 2, 0, 0]}>
+          <torusGeometry args={[0.3, 0.04, 8, 16]} />
+          <meshStandardMaterial color="#333333" roughness={0.4} metalness={0.7} />
+        </mesh>
+      </group>
+    </Float>
+  );
+}
+
+// Film Reel
+function FilmReel() {
+  const meshRef = useRef<THREE.Group>(null);
 
   useFrame((state) => {
     if (meshRef.current) {
-      meshRef.current.rotation.z = state.clock.elapsedTime * 0.1;
-      meshRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.3) * 0.5;
+      meshRef.current.rotation.z = state.clock.elapsedTime * 0.5;
+      meshRef.current.position.y = Math.sin(state.clock.elapsedTime * 0.7) * 0.3;
     }
   });
 
   return (
-    <Float speed={0.8} rotationIntensity={0.3} floatIntensity={2}>
-      <mesh ref={meshRef} position={[3.5, 1, -3]} scale={1.2}>
-        <sphereGeometry args={[1, 32, 32]} />
-        <MeshWobbleMaterial
-          color="#d4a050"
-          roughness={0.5}
-          metalness={0.3}
-          factor={0.6}
-          speed={2}
-          transparent
-          opacity={0.18}
-        />
-      </mesh>
+    <Float speed={1} rotationIntensity={0.3} floatIntensity={1.2}>
+      <group ref={meshRef} position={[3.5, -1.5, -3]} scale={0.4}>
+        {/* Outer ring */}
+        <mesh>
+          <torusGeometry args={[1.2, 0.15, 16, 32]} />
+          <meshStandardMaterial color="#2a2a2a" roughness={0.3} metalness={0.8} />
+        </mesh>
+        {/* Inner hub */}
+        <mesh>
+          <cylinderGeometry args={[0.4, 0.4, 0.2, 16]} />
+          <meshStandardMaterial color="#333333" roughness={0.4} metalness={0.7} />
+        </mesh>
+        {/* Spokes */}
+        {[0, 60, 120, 180, 240, 300].map((angle) => (
+          <mesh key={angle} rotation={[0, 0, (angle * Math.PI) / 180]}>
+            <boxGeometry args={[2.2, 0.08, 0.1]} />
+            <meshStandardMaterial color="#3a3a3a" roughness={0.4} metalness={0.6} />
+          </mesh>
+        ))}
+      </group>
     </Float>
   );
 }
 
-// Wireframe Dodecahedron
-function WireframeDodeca() {
-  const meshRef = useRef<THREE.Mesh>(null);
+// Clapperboard
+function Clapperboard() {
+  const groupRef = useRef<THREE.Group>(null);
 
   useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.y = state.clock.elapsedTime * 0.12;
-      meshRef.current.rotation.z = state.clock.elapsedTime * 0.08;
+    if (groupRef.current) {
+      groupRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.25) * 0.2 - 0.3;
+      groupRef.current.position.y = Math.sin(state.clock.elapsedTime * 0.4) * 0.2;
     }
   });
 
   return (
-    <Float speed={1} rotationIntensity={0.2} floatIntensity={1}>
-      <mesh ref={meshRef} position={[-3.5, -1.5, -2]} scale={1}>
-        <dodecahedronGeometry args={[1, 0]} />
-        <meshStandardMaterial
-          color="#c0c0c0"
-          roughness={0.8}
-          metalness={0.1}
-          wireframe
-          transparent
-          opacity={0.2}
-        />
-      </mesh>
+    <Float speed={0.6} rotationIntensity={0.2} floatIntensity={1}>
+      <group ref={groupRef} position={[-3.5, -1, -2]} scale={0.45} rotation={[0.1, 0.3, 0.05]}>
+        {/* Board */}
+        <mesh>
+          <boxGeometry args={[2, 1.6, 0.08]} />
+          <meshStandardMaterial color="#1a1a1a" roughness={0.5} metalness={0.3} />
+        </mesh>
+        {/* Clapper top */}
+        <mesh position={[0, 0.9, 0.02]} rotation={[0, 0, 0.15]}>
+          <boxGeometry args={[2, 0.25, 0.06]} />
+          <meshStandardMaterial color="#e8a030" roughness={0.3} metalness={0.5} />
+        </mesh>
+        {/* Stripes on clapper */}
+        {[-0.6, -0.2, 0.2, 0.6].map((x) => (
+          <mesh key={x} position={[x, 0.9, 0.06]} rotation={[0, 0, 0.15]}>
+            <boxGeometry args={[0.15, 0.25, 0.02]} />
+            <meshStandardMaterial color="#ffffff" roughness={0.5} metalness={0.1} />
+          </mesh>
+        ))}
+      </group>
     </Float>
   );
 }
 
-// Floating Torus Knot
-function FloatingKnot() {
-  const meshRef = useRef<THREE.Mesh>(null);
-
-  useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.x = state.clock.elapsedTime * 0.1;
-      meshRef.current.rotation.y = state.clock.elapsedTime * 0.15;
-    }
-  });
-
-  return (
-    <Float speed={1.5} rotationIntensity={0.5} floatIntensity={1.2}>
-      <mesh ref={meshRef} position={[-2, 2, -4]} scale={0.5}>
-        <torusKnotGeometry args={[1, 0.3, 128, 16]} />
-        <MeshDistortMaterial
-          color="#e8a030"
-          roughness={0.4}
-          metalness={0.5}
-          distort={0.1}
-          speed={1.5}
-          transparent
-          opacity={0.15}
-        />
-      </mesh>
-    </Float>
-  );
-}
-
-// Floating Particles
-function Particles() {
-  const count = 80;
+// Floating light particles (like studio dust in light beams)
+function DustParticles() {
+  const count = 60;
   const positions = useMemo(() => {
     const pos = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
-      pos[i * 3] = (Math.random() - 0.5) * 15;
+      pos[i * 3] = (Math.random() - 0.5) * 14;
       pos[i * 3 + 1] = (Math.random() - 0.5) * 10;
-      pos[i * 3 + 2] = (Math.random() - 0.5) * 8 - 3;
+      pos[i * 3 + 2] = (Math.random() - 0.5) * 6 - 2;
     }
     return pos;
   }, []);
@@ -136,8 +175,7 @@ function Particles() {
 
   useFrame((state) => {
     if (pointsRef.current) {
-      pointsRef.current.rotation.y = state.clock.elapsedTime * 0.02;
-      pointsRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.05) * 0.1;
+      pointsRef.current.rotation.y = state.clock.elapsedTime * 0.015;
     }
   });
 
@@ -152,39 +190,41 @@ function Particles() {
         />
       </bufferGeometry>
       <pointsMaterial
-        size={0.04}
+        size={0.035}
         color="#e8a030"
         transparent
-        opacity={0.5}
+        opacity={0.4}
         sizeAttenuation
       />
     </points>
   );
 }
 
-// Octahedron 
-function FloatingOcta() {
-  const meshRef = useRef<THREE.Mesh>(null);
+// Microphone
+function Microphone() {
+  const groupRef = useRef<THREE.Group>(null);
 
   useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.y = state.clock.elapsedTime * 0.2;
-      meshRef.current.position.y = Math.cos(state.clock.elapsedTime * 0.7) * 0.4;
+    if (groupRef.current) {
+      groupRef.current.rotation.z = Math.sin(state.clock.elapsedTime * 0.35) * 0.15;
+      groupRef.current.position.y = Math.cos(state.clock.elapsedTime * 0.5) * 0.2;
     }
   });
 
   return (
-    <Float speed={2} rotationIntensity={0.6} floatIntensity={1.5}>
-      <mesh ref={meshRef} position={[4, -2, -3]} scale={0.6}>
-        <octahedronGeometry args={[1, 0]} />
-        <meshStandardMaterial
-          color="#e8a030"
-          roughness={0.2}
-          metalness={0.8}
-          transparent
-          opacity={0.12}
-        />
-      </mesh>
+    <Float speed={1.3} rotationIntensity={0.2} floatIntensity={1}>
+      <group ref={groupRef} position={[-1, 2, -3]} scale={0.35}>
+        {/* Mic head */}
+        <mesh position={[0, 1.2, 0]}>
+          <sphereGeometry args={[0.35, 16, 16]} />
+          <meshStandardMaterial color="#888888" roughness={0.2} metalness={0.9} wireframe />
+        </mesh>
+        {/* Mic body */}
+        <mesh position={[0, 0, 0]}>
+          <cylinderGeometry args={[0.12, 0.12, 2, 8]} />
+          <meshStandardMaterial color="#2a2a2a" roughness={0.3} metalness={0.7} />
+        </mesh>
+      </group>
     </Float>
   );
 }
@@ -201,7 +241,7 @@ function MouseFollowLight() {
     }
   });
 
-  return <pointLight ref={light} intensity={0.5} color="#e8a030" distance={10} />;
+  return <pointLight ref={light} intensity={0.4} color="#e8a030" distance={10} />;
 }
 
 export default function Scene3D() {
@@ -213,16 +253,16 @@ export default function Scene3D() {
         style={{ background: 'transparent' }}
       >
         <Suspense fallback={null}>
-          <ambientLight intensity={0.6} />
-          <directionalLight position={[5, 5, 5]} intensity={0.6} color="#ffffff" />
+          <ambientLight intensity={0.5} />
+          <directionalLight position={[5, 5, 5]} intensity={0.7} color="#ffffff" />
           <directionalLight position={[-3, -3, 2]} intensity={0.2} color="#e8a030" />
           <MouseFollowLight />
-          <LowPolyCrystal />
-          <MorphBlob />
-          <WireframeDodeca />
-          <FloatingKnot />
-          <FloatingOcta />
-          <Particles />
+          <FilmCamera />
+          <StudioLight />
+          <FilmReel />
+          <Clapperboard />
+          <Microphone />
+          <DustParticles />
         </Suspense>
       </Canvas>
     </div>
