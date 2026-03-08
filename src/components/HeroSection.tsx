@@ -41,18 +41,12 @@ export default function HeroSection() {
 
           <div className="overflow-hidden mb-4">
             <motion.h1 custom={1} variants={textReveal} className="font-display font-extrabold text-5xl md:text-7xl lg:text-8xl leading-[0.95] tracking-tight">
-              <span className="text-gradient">Creative Media</span>
-            </motion.h1>
-          </div>
-          <div className="overflow-hidden mb-4">
-            <motion.h1 custom={2} variants={textReveal} className="font-display font-extrabold text-5xl md:text-7xl lg:text-8xl leading-[0.95] tracking-tight text-foreground">
-              & Digital Marketing
+              <span className="text-gradient">CHS MEDIA &</span>
             </motion.h1>
           </div>
           <div className="overflow-hidden mb-8">
-            <motion.h1 custom={3} variants={textReveal} className="font-display font-extrabold text-5xl md:text-7xl lg:text-8xl leading-[0.95] tracking-tight">
-              <span className="text-foreground">Agency in </span>
-              <span className="text-gradient">Hyderabad</span>
+            <motion.h1 custom={2} variants={textReveal} className="font-display font-extrabold text-5xl md:text-7xl lg:text-8xl leading-[0.95] tracking-tight text-foreground">
+              DIGITAL SOLUTIONS
             </motion.h1>
           </div>
         </motion.div>
